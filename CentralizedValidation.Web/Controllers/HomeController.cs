@@ -14,6 +14,12 @@ namespace CentralizedValidation.Web.Controllers
             return View(new UserViewModel());
         }
 
+        [HttpPost]
+        public ActionResult Index(UserViewModel model)
+        {
+            return View(model);
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

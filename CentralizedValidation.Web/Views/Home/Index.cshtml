@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-4">
         <h2>Add user</h2>
-        <form role="form">
+        <form role="form" method="POST" action="@Url.Action("Index")">
             <div class="form-group">
                 @Html.LabelFor(x => x.Firstname)
                 @Html.TextBoxFor(x => x.Firstname, new Dictionary<string, object> { { "class", "form-control" } })
