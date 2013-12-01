@@ -1,4 +1,4 @@
-centralized-validation
+centralized-validation (In progress)
 ======================
 
 Show a way to centralize your use of DataAnnotations 
