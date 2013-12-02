@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using CentralizedValidation.Web.Code.Services;
 using CentralizedValidation.Web.Models;
 
 namespace CentralizedValidation.Web.Controllers
@@ -17,6 +16,12 @@ namespace CentralizedValidation.Web.Controllers
         [HttpPost]
         public ActionResult Index(UserViewModel model)
         {
+            var userService = new UserService();
+
+            var validationResults = userService.Add(model);
+
+            
+
             return View(model);
         }
 

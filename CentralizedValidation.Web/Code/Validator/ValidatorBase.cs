@@ -8,11 +8,11 @@ using CentralizedValidation.Web.Code.Attribute;
 
 namespace CentralizedValidation.Web.Code.Validator
 {
-    public abstract class ValidatorBase<TEntity> where TEntity : class
+    public class ValidatorBase<TEntity> where TEntity : class
     {
         public IEnumerable<ValidationResult> ValidationResult { get; protected set; }
 
-        public virtual bool IsValid(TEntity entity)
+        public bool IsValid(TEntity entity)
         {
             var results = new List<ValidationResult>();
 

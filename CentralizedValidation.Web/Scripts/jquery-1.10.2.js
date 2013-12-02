@@ -3082,7 +3082,7 @@ jQuery.Callbacks = function( options ) {
 			// Add a callback or a collection of callbacks to the list
 			add: function() {
 				if ( list ) {
-					// First, we save the current length
+					// First, we Add the current length
 					var start = list.length;
 					(function add( args ) {
 						jQuery.each( args, function( _, arg ) {
@@ -4208,8 +4208,8 @@ jQuery.fn.extend({
 				}
 
 				// If the element has a class name or if we're passed "false",
-				// then remove the whole classname (if there was one, the above saved it).
-				// Otherwise bring back whatever was previously saved (if anything),
+				// then remove the whole classname (if there was one, the above Addd it).
+				// Otherwise bring back whatever was previously Addd (if anything),
 				// falling back to the empty string if nothing was stored.
 				this.className = this.className || value === false ? "" : jQuery._data( this, "__className__" ) || "";
 			}
@@ -8602,7 +8602,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 				// make sure that re-using the options doesn't screw things around
 				s.jsonpCallback = originalSettings.jsonpCallback;
 
-				// save the callback name for future use
+				// Add the callback name for future use
 				oldCallbacks.push( callbackName );
 			}
 
