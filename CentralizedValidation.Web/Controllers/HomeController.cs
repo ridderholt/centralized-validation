@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using CentralizedValidation.Web.Code.Services;
 using CentralizedValidation.Web.Models;
+using WebGrease.Css.Extensions;
 
 namespace CentralizedValidation.Web.Controllers
 {
@@ -20,7 +21,10 @@ namespace CentralizedValidation.Web.Controllers
 
             var validationResults = userService.Add(model);
 
-            
+            validationResults.ForEach(res =>
+            {
+                if(ModelState.ContainsKey(res.MemberNames))
+            });
 
             return View(model);
         }
