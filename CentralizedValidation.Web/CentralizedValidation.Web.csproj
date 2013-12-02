@@ -115,8 +115,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Code\Attribute\MetadataLocationAttribute.cs" />
-    <Compile Include="Code\CustomMetadataProvider.cs" />
     <Compile Include="Code\Metadata\UserMetadata.cs" />
+    <Compile Include="Code\Provider\CustomMetadataProvider.cs" />
+    <Compile Include="Code\Validator\ValidatorBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

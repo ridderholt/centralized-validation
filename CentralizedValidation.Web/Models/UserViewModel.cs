@@ -1,21 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using CentralizedValidation.Web.Code.Attribute;
+using CentralizedValidation.Web.Code.Metadata;
 
 namespace CentralizedValidation.Web.Models
 {
     public class UserViewModel
     {
-        [Display(Name = "Firstname")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Firstname is required")]
+        [MetadataLocation(typeof(UserMetadata))]
         public string Firstname { get; set; }
 
-        [Display(Name = "Lastname")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Lastname is required")]
+        [MetadataLocation(typeof(UserMetadata))]
         public string Lastname { get; set; }
 
-        [Display(Name = "E-mail")]
+        [MetadataLocation(typeof(UserMetadata))]
         public string Email { get; set; }
 
-        [Display(Name = "Age")]
+        [MetadataLocation(typeof(UserMetadata))]
         public int Age { get; set; }
     }
 }
