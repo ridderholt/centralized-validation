@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web.Mvc;
 using CentralizedValidation.Web.Code.Services;
 using CentralizedValidation.Web.Models;
@@ -20,6 +21,11 @@ namespace CentralizedValidation.Web.Controllers
             var userService = new UserService();
 
             var validationResults = userService.Add(model);
+
+            foreach (var validationResult in validationResults)
+            {
+                ModelState.AddModelError(validationResult.MemberNames.First(), validationResult.ErrorMessage);
+            }
 
             return View(model);
         }

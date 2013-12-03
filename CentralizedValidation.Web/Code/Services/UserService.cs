@@ -8,11 +8,11 @@ namespace CentralizedValidation.Web.Code.Services
 {
     public class UserService
     {
-        private readonly ValidatorBase<UserEntity> _validator;
+        private readonly Validator<UserEntity> _validator;
 
         public UserService()
         {
-            _validator = new ValidatorBase<UserEntity>();
+            _validator = new Validator<UserEntity>();
         }
 
         public IEnumerable<ValidationResult> Add(UserViewModel model)
