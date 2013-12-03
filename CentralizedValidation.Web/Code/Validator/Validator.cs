@@ -9,7 +9,7 @@ using CentralizedValidation.Web.Code.Attribute;
 
 namespace CentralizedValidation.Web.Code.Validator
 {
-    public class ValidatorBase<TEntity> where TEntity : class
+    public class Validator<TEntity> where TEntity : class
     {
         public IEnumerable<ValidationResult> ValidationResult { get; protected set; }
 
