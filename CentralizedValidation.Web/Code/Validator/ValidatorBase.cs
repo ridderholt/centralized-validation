@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Resources;
 using CentralizedValidation.Web.Code.Attribute;
 
@@ -18,38 +19,53 @@ namespace CentralizedValidation.Web.Code.Validator
 
             foreach (var propertyInfo in entity.GetType().GetProperties())
             {
-                var metaDataAttributes = propertyInfo.GetCustomAttributes(typeof(MetadataLocationAttribute), true);
-                if (metaDataAttributes.Any())
+                if (!HasMetadata(propertyInfo)) continue;
+
+                var validationAttributes = GetValidationAttributes(propertyInfo);
+
+                foreach (var validationAttribute in validationAttributes)
                 {
-                    var metaAttribute = metaDataAttributes[0] as MetadataLocationAttribute;
-                    var metaDataInfo = metaAttribute.Type.GetProperty(propertyInfo.Name);
-                    var validationAttributes = metaDataInfo.GetCustomAttributes(typeof(ValidationAttribute), true);
+                    var isValid = validationAttribute.IsValid(propertyInfo.GetValue(entity, null));
 
-                    foreach (var attr in validationAttributes)
-                    {
-                        var validationAttribute = attr as ValidationAttribute;
-                        var isValid = validationAttribute.IsValid(propertyInfo.GetValue(entity, null));
+                    if (isValid) continue;
 
-                        if (!isValid)
-                        {
-                            var members = new List<string> { propertyInfo.Name };
+                    var members = new List<string> { propertyInfo.Name };
 
-                            if (string.IsNullOrEmpty(validationAttribute.ErrorMessageResourceName))
-                            {
-                                results.Add(new ValidationResult(validationAttribute.ErrorMessage, members));
-                            }
-                            else
-                            {
-                                var manager = new ResourceManager(validationAttribute.ErrorMessageResourceType);
-                                results.Add(new ValidationResult(manager.GetString(validationAttribute.ErrorMessageResourceName), members));
-                            }
-                        }
-                    }
+                    AddValidationError(validationAttribute, results, members);
                 }
             }
 
             ValidationResult = results;
             return !results.Any();
+        }
+
+        private static void AddValidationError(ValidationAttribute validationAttribute, List<ValidationResult> results, List<string> members)
+        {
+            if (string.IsNullOrEmpty(validationAttribute.ErrorMessageResourceName))
+            {
+                results.Add(new ValidationResult(validationAttribute.ErrorMessage, members));
+            }
+            else
+            {
+                var manager = new ResourceManager(validationAttribute.ErrorMessageResourceType);
+                results.Add(new ValidationResult(manager.GetString(validationAttribute.ErrorMessageResourceName), members));
+            }
+        }
+
+        private static IEnumerable<ValidationAttribute> GetValidationAttributes(PropertyInfo propertyInfo)
+        {
+            var metaDataAttributes = propertyInfo.GetCustomAttributes(typeof (MetadataLocationAttribute), true);
+            var metaAttribute = metaDataAttributes[0] as MetadataLocationAttribute;
+            var metaDataInfo = metaAttribute.Type.GetProperty(propertyInfo.Name);
+            var validationAttributes = metaDataInfo.GetCustomAttributes(typeof (ValidationAttribute), true);
+
+            return validationAttributes.Select(validationAttribute => validationAttribute as ValidationAttribute);
+        }
+
+        private static bool HasMetadata(PropertyInfo propertyInfo)
+        {
+            var metaDataAttributes = propertyInfo.GetCustomAttributes(typeof(MetadataLocationAttribute), true);
+            return metaDataAttributes.Any();
         }
     }
 }

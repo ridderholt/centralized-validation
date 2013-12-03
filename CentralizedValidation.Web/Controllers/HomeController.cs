@@ -21,11 +21,6 @@ namespace CentralizedValidation.Web.Controllers
 
             var validationResults = userService.Add(model);
 
-            validationResults.ForEach(res =>
-            {
-                if(ModelState.ContainsKey(res.MemberNames))
-            });
-
             return View(model);
         }
 
